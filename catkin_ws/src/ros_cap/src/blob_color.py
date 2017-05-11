@@ -79,6 +79,10 @@ class BlobColor():
         punto=Point()
         punto.z=0
         area_max=0
+        y1=0
+        h1=0
+        y2=0
+        h2=0
         altura_imagen=0
         for cnt in contours:
             #Obtener rectangulo
@@ -89,12 +93,18 @@ class BlobColor():
 
                 #Dibujar un rectangulo en la imagen
                 cv2.rectangle(frame, (x,y), (x+w,y+h), (255,128,0), 2)
-                if w*h>area_max: 
+                if w*h>area_max:
+                    y2=y1                    
+                    h2=h1                    
+                    y1=y
+                    h1=h 
                     area_max=w*h
                     punto.x=x+w/2
                     punto.y=y+h/2
                     altura_imagen=h
-        
+        if y2+h2-y1<1:
+            punto.y=punto.y-h2/2
+            altura_imagen=altura_imagen+h2
         f=348.2990501038053  
         if altura_imagen==0: 
             punto.z=-1
