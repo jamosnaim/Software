@@ -12,34 +12,43 @@ from duckietown_msgs.msg import  Twist2DStamped, BoolStamped
 import numpy as np
 
 
-class Girar():
+class Controlador():
 
     def __init__(self):
 
 
         #Subscribirse al topico "/duckiebot/camera_node/image/raw"
-        self.point_subscriber = rospy.Subscriber('punto', Point, self._process_callback)
+        self.point_subscriber = rospy.Subscriber('punto', Point, self._process_image)
         self.control_subscriber = rospy.Subscriber('/duckiebot/joy', Joy,self._process_callback)
         self.motor_publisher = rospy.Publisher('/duckiebot/wheels_driver_node/car_cmd', Twist2DStamped, queue_size=1)
+        self.hayPato=False
+        self.posicionPato=0
+        
+
+    def _process_image(self,punto):
+        if punto.z==-1:
+            self.hayPato=False
+            self.posicionPato=0
+        else:
+            self.hayPato=True
+            self.posicionPato=punto.z
 
 
 
 
-
-
-    def _process_callback(self,punto,control):
+    def _process_callback(self,control):
         msg=Twist2DStamped()
         msg.header.stamp = rospy.get_rostime()
         msg.v=msg.axes[1]
         msg.omega = 8.3*msg.axes[0]
-        if punto.z<12:
+        if !self.hayPato or self.posicionPato<12:
             msg.v=0
         self.motor_publisher.publish(msg)
 def main():
 
-    rospy.init_node('Girar')
+    rospy.init_node('Controlador')
 
-    Girar()
+    Controlador()
 
     rospy.spin()
 

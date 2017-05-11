@@ -96,7 +96,7 @@ class BlobColor():
                     altura_imagen=h
         
         f=348.2990501038053  
-        if altura_imagen=0: 
+        if altura_imagen==0: 
             punto.z=-1
         else:  
             punto.z=f*self.altura_pato/altura_imagen
