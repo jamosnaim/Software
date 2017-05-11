@@ -41,6 +41,8 @@ class BlobColor():
 
         self.min_area = 100
 
+        self.altura_pato = 3.5
+
 
 
     def _process_image(self,img):
@@ -77,6 +79,7 @@ class BlobColor():
         punto=Point()
         punto.z=0
         area_max=0
+        altura_imagen=0
         for cnt in contours:
             #Obtener rectangulo
             x,y,w,h = cv2.boundingRect(cnt)
@@ -90,8 +93,14 @@ class BlobColor():
                     area_max=w*h
                     punto.x=x+w/2
                     punto.y=y+h/2
-
+                    altura_imagen=h
         
+        f=348.2990501038053  
+        if altura_imagen=0: 
+            punto.z=-1
+        else:  
+            punto.z=f*self.altura_pato/altura_imagen
+        print punto
         #Publicar frame
         imagen_final = self.bridge.cv2_to_imgmsg(frame, "bgr8")
         self.image_publisher.publish(imagen_final)
