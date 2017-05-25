@@ -18,8 +18,8 @@ lower_blue = np.array([110,50,50])
 upper_blue = np.array([130,255,255])
 lower_red = np.array([0,0,0])
 upper_red = np.array([0,0,0])
-lower_yellow = np.array([40*255/360,100,70])
-upper_yellow = np.array([100*255/360,255,255])
+lower_yellow = np.array([35*255/360,120,120])
+upper_yellow = np.array([90*255/360,255,255])
 
 
 class BlobColor():
@@ -72,17 +72,17 @@ class BlobColor():
         mask = cv2.erode(mask, kernel1, iterations = 1)
         
         #Operacion morfologica dilate
-        mask = cv2.dilate(mask, kernel2, iterations = 3)
+        mask = cv2.dilate(mask, kernel2, iterations = 2)
 
         mask, contours, hierarchy = cv2.findContours(mask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 
         punto=Point()
         punto.z=0
         area_max=0
-        y1=0
-        h1=0
-        y2=0
-        h2=0
+        #y1=0
+        #h1=0
+        #y2=0
+        #h2=0
         altura_imagen=0
         for cnt in contours:
             #Obtener rectangulo
@@ -94,17 +94,17 @@ class BlobColor():
                 #Dibujar un rectangulo en la imagen
                 cv2.rectangle(frame, (x,y), (x+w,y+h), (255,128,0), 2)
                 if w*h>area_max:
-                    y2=y1                    
-                    h2=h1                    
-                    y1=y
-                    h1=h 
+                    #y2=y1                    
+                    #h2=h1                    
+                    #y1=y
+                    #h1=h 
                     area_max=w*h
                     punto.x=x+w/2
                     punto.y=y+h/2
                     altura_imagen=h
-        if y2+h2-y1<1:
-            punto.y=punto.y-h2/2
-            altura_imagen=altura_imagen+h2
+        #if y2+h2-y1<1:
+        #    punto.y=punto.y-h2/2
+        #    altura_imagen=altura_imagen+h2
         f=348.2990501038053  
         if altura_imagen==0: 
             punto.z=-1
