@@ -39,10 +39,11 @@ class Controlador():
     def _process_callback(self,control):
         msg=Twist2DStamped()
         msg.header.stamp = rospy.get_rostime()
-        msg.v=0.5*control.axes[1]
+        msg.v=0.4*control.axes[1]
         msg.omega = 8.3*control.axes[0]
-        if self.hayPato and self.posicionPato<30 and msg.v>0 and not control.buttons[0]:
-            msg.v=0
+        if self.hayPato and self.posicionPato<40 and msg.v>0.1 and not control.buttons[0]:
+            msg.omega=8.3
+            v=0.1
         self.motor_publisher.publish(msg)
 def main():
 
