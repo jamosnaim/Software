@@ -44,9 +44,9 @@ class Controlador():
         if self.hayPato and msg.v>0.1 and not control.buttons[0]:
             if self.posicionPato<50: 
                 msg.v=0.5*msg.v
-            if self.posicionPato<40
-                msg.omega=8.3
-                msg.v=0.1
+            if self.posicionPato<40:
+                msg.omega=-8.3
+                msg.v=0.5*msg.v         		
         self.motor_publisher.publish(msg)
 def main():
 
